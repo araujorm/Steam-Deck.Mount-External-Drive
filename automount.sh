@@ -1,72 +1,80 @@
 #!/bin/bash
 #Steam Deck Mount External Drive by scawp
-#License: DBAD: https://github.com/scawp/Steam-Deck.Mount-External-Drive/blob/main/LICENSE.md
-#Source: https://github.com/scawp/Steam-Deck.Mount-External-Drive
+#License: DBAD: https://github.com/flavioislima/Steam-Deck.Mount-External-Drive/blob/main/LICENSE.md
+#Source: https://github.com/flavioislima/Steam-Deck.Mount-External-Drive
 # Use at own Risk!
 
-#This is a slimmed down verions of the main branch to provide 
-#only automounting to ANY External Drive, such as a Dock ;)
-#without worrying about configuration
+unmount_drive() {
+  label="$(lsblk -noLABEL $1)"
+  if [ -z "$label" ]; then
+    label="$(lsblk -noUUID $1)"
+  fi
 
-function mount_drive () {
+  if [ -d "/run/media/deck/$label" ]; then
+    umount "/run/media/deck/$label"
+    rmdir "/run/media/deck/$label"
+  fi
+}
+
+mount_drive() {
   label="$(lsblk -noLABEL $1)"
   fs_type="$(lsblk -noFSTYPE $1)"
 
   if [ -z "$label" ]; then
     label="$(lsblk -noUUID $1)"
-    echo "No label using UUID"
+    echo "No label found, using UUID as label"
   fi
 
+  # Check if the drive is already mounted
+  mount_point="$(lsblk -noMOUNTPOINT $1)"
+  if [ ! -z "$mount_point" ]; then
+    echo "Drive $1 is already mounted at $mount_point"
+    return 0
+  fi
+
+  # Create the mount directory and set permissions
   mkdir -p "/run/media/deck/$label"
   chown deck:deck "/run/media/deck"
   chown deck:deck "/run/media/deck/$label"
 
-  #TODO: Check /run/media/deck/$label exists
+  # Mount the drive
   if [ "$fs_type" = "ntfs" ]; then
-    #TODO: Better default options
-    echo "Attempting Mounting lowntfs-3g"
+    echo "Attempting to mount as NTFS using lowntfs-3g"
     mount.lowntfs-3g "$1" "/run/media/deck/$label" -ouid=1000,gid=1000,user
   else
-    #TODO: Better default options
-    echo "Attempting Mounting $fs_type"
+    echo "Attempting to mount as $fs_type"
     mount "$1" "/run/media/deck/$label"
   fi
 
-# From https://gist.github.com/HazCod/da9ec610c3d50ebff7dd5e7cac76de05
-urlencode()
-{
-    [ -z "$1" ] || echo -n "$@" | hexdump -v -e '/1 "%02x"' | sed 's/\(..\)/%\1/g'
-}
-
+  # Check if the mount was successful
   mount_point="$(lsblk -noMOUNTPOINT $1)"
   if [ -z "$mount_point" ];then
-    echo "Failed to mount "$1" at /run/media/deck/$label"
+    echo "Failed to mount $1 at /run/media/deck/$label"
   else
-    echo "Mounted "$1" at $mount_point"
+    echo "Mounted $1 at $mount_point"
     mount_point="$mount_point/SteamLibrary"
     echo "$mount_point"
-    #Below Stolen from /usr/lib/hwsupport/sdcard-mount.sh
+
     url=$(urlencode "${mount_point}")
 
-    # If Steam is running, notify it
     if pgrep -x "steam" > /dev/null; then
-        # TODO use -ifrunning and check return value - if there was a steam process and it returns -1, the message wasn't sent
-        # need to retry until either steam process is gone or -ifrunning returns 0, or timeout i guess
         systemd-run -M 1000@ --user --collect --wait sh -c "steam steam://addlibraryfolder/${url@Q}"
     fi
   fi
 }
 
-#TODO: Do stuff on device removal
 if [ "$1" = "remove" ]; then
-  #TODO: if removed without unmounting first  
-    #Attempt to unmount if system still thinks is mounted. btrfs seems to do this
-    #mount "$2"
-    #Delete orphaned dir in /dev/media/deck/[LABEL|UUID] if exists
-  exit 0;
+  unmount_drive "/dev/$2"
 else
-  #TODO: Check if Device is already mounted? eg via fstab?
-  mount_drive "/dev/$2"
+# Get a list of all external drives
+external_drives=$(lsblk | awk '/^sd[a-z]/ && $7 == "" {print $1}')
+
+# Iterate through all external drives
+for drive in $external_drives; do
+  # Call the mount_drive function for each drive
+  mount_drive "/dev/$drive"
+done
 fi
 
-exit 0;
+exit 0
+
