@@ -41,6 +41,9 @@ mount_drive() {
   if [ "$fs_type" = "ntfs" ]; then
     echo "Attempting to mount as NTFS using lowntfs-3g"
     mount.lowntfs-3g "$1" "/run/media/deck/$label" -ouid=1000,gid=1000,user
+  elif [ "$fs_type" = "btrfs" ]; then
+      echo "Attempting to mount as BTRFS with compression"
+      mount -t btrfs -o defaults,compress=zstd "$1" "/run/media/deck/$label"
   else
     echo "Attempting to mount as $fs_type"
     mount "$1" "/run/media/deck/$label"
