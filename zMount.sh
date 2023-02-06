@@ -1,11 +1,11 @@
 #!/bin/bash
 #Steam Deck Mount External Drive by scawp
-#License: DBAD: https://github.com/scawp/Steam-Deck.Mount-External-Drive/blob/main/LICENSE.md
-#Source: https://github.com/scawp/Steam-Deck.Mount-External-Drive
+#License: DBAD: https://github.com/flavioislima/Steam-Deck.Mount-External-Drive/blob/main/LICENSE.md
+#Source: https://github.com/flavioislima/Steam-Deck.Mount-External-Drive
 # Use at own Risk!
 
 script_dir="$(dirname $(realpath "$0"))"
-tmp_dir="/tmp/scawp.SDMED.zMount"
+tmp_dir="/tmp/flavioislima.SDMED.zMount"
 
 mkdir -p "$tmp_dir"
 

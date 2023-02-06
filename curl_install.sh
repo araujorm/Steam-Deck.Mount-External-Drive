@@ -1,22 +1,22 @@
 #!/bin/bash
 #Steam Deck Mount External Drive by scawp
-#License: DBAD: https://github.com/scawp/Steam-Deck.Mount-External-Drive/blob/main/LICENSE.md
-#Source: https://github.com/scawp/Steam-Deck.Mount-External-Drive
+#License: DBAD: https://github.com/flavioislima/Steam-Deck.Mount-External-Drive/blob/main/LICENSE.md
+#Source: https://github.com/flavioislima/Steam-Deck.Mount-External-Drive
 # Use at own Risk!
 
-#curl -sSL https://raw.githubusercontent.com/scawp/Steam-Deck.Mount-External-Drive/main/curl_install.sh | bash
+#curl -sSL https://raw.githubusercontent.com/flavioislima/Steam-Deck.Mount-External-Drive/main/curl_install.sh | bash
 
 #stop running script if anything returns an error (non-zero exit )
 set -e
 
-repo_url="https://raw.githubusercontent.com/scawp/Steam-Deck.Mount-External-Drive/main"
+repo_url="https://raw.githubusercontent.com/flavioislima/Steam-Deck.Mount-External-Drive/main"
 repo_lib_dir="$repo_url/lib"
 
-tmp_dir="/tmp/scawp.SDMED.install"
+tmp_dir="/tmp/flavioislima.SDMED.install"
 
 rules_install_dir="/etc/udev/rules.d"
 service_install_dir="/etc/systemd/system"
-script_install_dir="/home/deck/.local/share/scawp/SDMED"
+script_install_dir="/home/deck/.local/share/flavioislima/SDMED"
 
 device_name="$(uname --nodename)"
 user="$(id -u deck)"
