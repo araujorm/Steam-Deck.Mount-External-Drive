@@ -18,10 +18,9 @@ rules_install_dir="/etc/udev/rules.d"
 service_install_dir="/etc/systemd/system"
 script_install_dir="/home/deck/.local/share/ogremalfeitor/SDMED"
 
-device_name="$(uname --nodename)"
 user="$(id -u deck)"
 
-if [ "$device_name" != "steamdeck" ] || [ "$user" != "1000" ]; then
+if [ ! -e /etc/steamos-release ] || [ "$user" != "1000" ]; then
   zenity --question --width=400 \
   --text="This code has been written specifically for the Steam Deck with user Deck \
   \nIt appears you are running on a different system/non-standard configuration. \
