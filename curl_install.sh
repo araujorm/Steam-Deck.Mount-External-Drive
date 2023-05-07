@@ -6,6 +6,7 @@
 
 #curl -sSL https://raw.githubusercontent.com/araujorm/Steam-Deck.Mount-External-Drive/main/curl_install.sh | bash
 
+user="$(id -u deck)"
 #stop running script if anything returns an error (non-zero exit )
 set -e
 
@@ -18,11 +19,24 @@ rules_install_dir="/etc/udev/rules.d"
 service_install_dir="/etc/systemd/system"
 script_install_dir="/home/deck/.local/share/ogremalfeitor/SDMED"
 
-user="$(id -u deck)"
+function prompt() {
+  TEXT=$1
+  set +e
+  if [ -n "$DISPLAY" ]; then
+    zenity --question --width=400 --text="$TEXT"
+  else
+    TEXT=${TEXT//\\n/$'\n'}
+    read -p "$TEXT (y/n) " -e -r REPLY
+    [ "$REPLY" = y ]
+  fi
+  EX=$?
+  set -e
+  return $EX
+}
+
 
 if [ ! -e /etc/steamos-release ] || [ "$user" != "1000" ]; then
-  zenity --question --width=400 \
-  --text="This code has been written specifically for the Steam Deck with user Deck \
+  prompt "This code has been written specifically for the Steam Deck with user Deck \
   \nIt appears you are running on a different system/non-standard configuration. \
   \nAre you sure you want to continue?"
   if [ "$?" != 0 ]; then
@@ -33,8 +47,7 @@ if [ ! -e /etc/steamos-release ] || [ "$user" != "1000" ]; then
 fi
 
 function install_automount () {
-  zenity --question --width=400 \
-    --text="Read $repo_url/README.md before proceeding. \
+  prompt "Read $repo_url/README.md before proceeding. \
   \nDo you want to install the Auto-Mount Service?"
   if [ "$?" != 0 ]; then
     #NOTE: This code will never be reached due to "set -e", the system will already exit for us but just incase keep this
@@ -71,8 +84,7 @@ function install_automount () {
 }
 
 function install_zmount () {
-  zenity --question --width=400 \
-    --text="Would you like to add \"zMount.sh\" \
+  prompt "Would you like to add \"zMount.sh\" \
     \n(a tool to manually mount drives) to your Steam Library?"
   if [ "$?" != 0 ]; then
     #NOTE: This code will never be reached due to "set -e", the system will already exit for us but just incase keep this
