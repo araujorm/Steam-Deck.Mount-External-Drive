@@ -8,5 +8,5 @@ Description=Mount External Drive on %i
 [Service]
 Type=oneshot
 RemainAfterExit=true
-ExecStart=/home/deck/.local/share/ogremalfeitor/SDMED/automount.sh add %i
-ExecStop=/home/deck/.local/share/ogremalfeitor/SDMED/automount.sh remove %i
+ExecStart=/usr/lib/hwsupport/sdcard-mount.sh add %i
+ExecStop=/usr/lib/hwsupport/sdcard-mount.sh remove %i
