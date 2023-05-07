@@ -1,16 +1,16 @@
 #!/bin/bash
 #Steam Deck Mount External Drive by scawp
-#License: DBAD: https://github.com/araujorm/Steam-Deck.Mount-External-Drive/blob/main/LICENSE.md
+#License: DBAD: https://github.com/araujorm/Steam-Deck.Mount-External-Drive/blob/master/LICENSE.md
 #Source: https://github.com/araujorm/Steam-Deck.Mount-External-Drive
 # Use at own Risk!
 
-#curl -sSL https://raw.githubusercontent.com/araujorm/Steam-Deck.Mount-External-Drive/main/curl_install.sh | bash
+#curl -sSL https://raw.githubusercontent.com/araujorm/Steam-Deck.Mount-External-Drive/master/curl_install.sh | bash
 
 user="$(id -u deck)"
 #stop running script if anything returns an error (non-zero exit )
 set -e
 
-repo_url="https://raw.githubusercontent.com/araujorm/Steam-Deck.Mount-External-Drive/main"
+repo_url="https://raw.githubusercontent.com/araujorm/Steam-Deck.Mount-External-Drive/master"
 repo_lib_dir="$repo_url/lib"
 
 tmp_dir="/tmp/araujorm.SDMED.install"

@@ -34,7 +34,7 @@ Drive requires prior formatting (currently tested with NTFS, Ext4, btrfs, NOTE: 
 
 ## Via Curl (One Line Install)
 
-In Konsole type `curl -sSL https://raw.githubusercontent.com/araujorm/Steam-Deck.Mount-External-Drive/main/curl_install.sh | bash`
+In Konsole type `curl -sSL https://raw.githubusercontent.com/araujorm/Steam-Deck.Mount-External-Drive/master/curl_install.sh | bash`
 
 a `sudo` password is required (run `passwd` if required first)
 
