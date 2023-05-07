@@ -37,7 +37,7 @@ Drive requires prior formatting (currently tested with NTFS, Ext4, btrfs, NOTE: 
 
 ## Via Curl (One Line Install)
 
-In Konsole type `curl -sSL https://raw.githubusercontent.com/flavioislima/Steam-Deck.Mount-External-Drive/main/curl_install.sh | bash`
+In Konsole type `curl -sSL https://raw.githubusercontent.com/araujorm/Steam-Deck.Mount-External-Drive/main/curl_install.sh | bash`
 
 a `sudo` password is required (run `passwd` if required first)
 
@@ -47,7 +47,7 @@ a `sudo` password is required (run `passwd` if required first)
 
 `sudo rm /etc/systemd/system/external-drive-mount@.service`
 
-`sudo rm -r /home/deck/.local/share/flavioislima/SDMED`
+`sudo rm -r /home/deck/.local/share/ogremalfeitor/SDMED`
 
 `sudo udevadm control --reload`
 
@@ -55,9 +55,9 @@ a `sudo` password is required (run `passwd` if required first)
 
 ## WORK IN PROGRESS!
 
-This will probably have bugs, so beware! log bugs under [issues](https://github.com/flavioislima/Steam-Deck.Mount-External-Drive/issues)!
+This will probably have bugs, so beware! log bugs under [issues](https://github.com/araujorm/Steam-Deck.Mount-External-Drive/issues)!
 
 ## "This is cool! How can I thank you?"
 ### Why not drop me a sub over on my youtube channel ;) [Chinballs Gaming](https://www.youtube.com/chinballsTV?sub_confirmation=1)
 
-### Also [Check out all these other things I'm making](https://github.com/flavioislima/Steam-Deck.Tools-List)
+### Also [Check out all these other things I'm making](https://github.com/araujorm/Steam-Deck.Tools-List)
