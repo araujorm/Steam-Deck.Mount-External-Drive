@@ -13,7 +13,8 @@ set -e
 repo_url="https://raw.githubusercontent.com/araujorm/Steam-Deck.Mount-External-Drive/master"
 repo_lib_dir="$repo_url/lib"
 
-tmp_dir="/tmp/araujorm.SDMED.install"
+tmp_dir="`mktemp -d`"
+trap "rm -rf $tmp_dir" EXIT
 
 rules_install_dir="/etc/udev/rules.d"
 service_install_dir="/etc/systemd/system"
@@ -53,9 +54,6 @@ function install_automount () {
     echo "bye then! xxx"
     exit 0;
   fi
-
-  echo "Making tmp folder $tmp_dir"
-  mkdir -p "$tmp_dir"
 
   echo "Downloading Required Files"
   curl -o "$tmp_dir/external-drive-mount@.service" "$repo_lib_dir/external-drive-mount@.service"
