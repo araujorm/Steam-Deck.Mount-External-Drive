@@ -1,8 +1,5 @@
 # READ THIS FIRST
-This script is based on the one written by scawp: https://github.com/scawp/Steam-Deck.Mount-External-Drive.
-Since it got no updates or improvements for a while now, I decided to take a look and see what I could do to improve it since my main issue with it was because it was not working with multiple external storages at the same time on Gaming Mode. Also some things were not implemented like the method to unmount the drives and the checks for the folder if it existed or not. 
-
-So this version now supports all of that and I might improve with other features in the future.
+This script is based on the one written by scawp - https://github.com/scawp/Steam-Deck.Mount-External-Drive - and a fork by flavioislima - https://github.com/flavioislima/Steam-Deck.Mount-External-Drive.git
 
 # Check the original READ ME bellow
 
